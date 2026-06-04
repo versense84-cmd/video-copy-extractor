@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>视频文案提取器</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Local Video Transcript Extractor</p>
+          <h1>视频文案提取器</h1>
+          <p class="subhead">粘贴公开视频链接，优先提取公开字幕；没有字幕时提取音频并用本地 Whisper 转写。</p>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="input-panel">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-mode="url">视频网址</button>
+            <button class="tab" data-mode="upload">手动上传</button>
+          </div>
+
+          <form id="urlForm" class="mode-panel">
+            <label for="videoUrl">视频链接</label>
+            <div class="input-row">
+              <input id="videoUrl" name="url" type="url" placeholder="https://www.youtube.com/watch?v=..." />
+              <button type="submit">开始提取</button>
+            </div>
+          </form>
+
+          <form id="uploadForm" class="mode-panel hidden">
+            <label for="mediaFile">视频或音频文件</label>
+            <div class="input-row">
+              <input id="mediaFile" name="file" type="file" accept="video/*,audio/*" />
+              <button type="submit">上传识别</button>
+            </div>
+          </form>
+
+          <div class="notice">
+            不绕过登录、付费、DRM 或私密内容。小红书、抖音、B站等平台若链接解析受限，请下载你有权处理的文件后用“手动上传”。
+          </div>
+        </div>
+
+        <div class="progress-panel">
+          <div class="status-line">
+            <span id="statusDot" class="dot"></span>
+            <span id="statusText">等待开始</span>
+          </div>
+          <ol id="progressList"></ol>
+        </div>
+
+        <div id="resultPanel" class="result-panel hidden">
+          <div class="result-toolbar">
+            <div class="segmented">
+              <button class="view-tab active" data-view="paragraph_text">自然段</button>
+              <button class="view-tab" data-view="plain_text">纯文字</button>
+              <button class="view-tab" data-view="timed_text">时间点</button>
+              <button class="view-tab" data-view="metadata_text">页面文字</button>
+            </div>
+            <button id="copyBtn" type="button">复制</button>
+          </div>
+          <textarea id="resultText" spellcheck="false"></textarea>
+          <div class="downloads">
+            <a id="downloadTxt" href="#">下载 TXT</a>
+            <a id="downloadSrt" href="#">下载 SRT</a>
+            <a id="downloadMd" href="#">下载 MD</a>
+            <a id="downloadJson" href="#">下载 JSON</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
